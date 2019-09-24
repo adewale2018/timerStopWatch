@@ -1,12 +1,8 @@
-let hour = 0;
-let minute = 0;
-let second = 0;
-let day = 0;
-let paused = false;
-let started = false;
+let hour = 0, minute = 0,  second = 0;
+let day = 0, paused = false, started = false;
 let timerID;
 
-const prependZeroToASingleDigitNumber = number => {
+const prependZero = number => {
   return number.toString().length === 1 ? `0${number}` : number;
 };
 
@@ -20,11 +16,9 @@ const toggleButton = button => {
     started = !started;
     content = started ? "Stop" : "Start";
   }
-
   button.textContent = content;
   button.className = content.toLowerCase();
 };
-
 
 const timer = () => {
   if (paused) {
@@ -35,40 +29,26 @@ const timer = () => {
     second = 0;
     document.getElementById(
       "second"
-    ).textContent = prependZeroToASingleDigitNumber(second);
+    ).textContent = prependZero(second);
     if (minute === 59) {
       minute = 0;
       document.getElementById(
         "minute"
-      ).textContent = prependZeroToASingleDigitNumber(minute);
+      ).textContent = prependZero(minute);
       document.getElementById(
         "hour"
-      ).textContent = prependZeroToASingleDigitNumber(++hour);
-      // if (hour === 23) {
-      //   hour = 0;
-      //   document.getElementById(
-      //     "hour"
-      //   ).textContent = prependZeroToASingleDigitNumber(hour);
-      //   document.getElementById(
-      //     "day"
-      //   ).textContent = prependZeroToASingleDigitNumber(++day);
-      // } else {
-      //   document.getElementById(
-      //     "hour"
-      //   ).textContent = prependZeroToASingleDigitNumber(++hour);
-      // }
+      ).textContent = prependZero(++hour);
     } else {
       document.getElementById(
         "minute"
-      ).textContent = prependZeroToASingleDigitNumber(++minute);
+      ).textContent = prependZero(++minute);
     }
   } else {
     document.getElementById(
       "second"
-    ).textContent = prependZeroToASingleDigitNumber(++second);
+    ).textContent = prependZero(++second);
   }
 };
-
 
 // entry point
 document.getElementById("startStop").onclick = e => {
@@ -77,20 +57,18 @@ document.getElementById("startStop").onclick = e => {
   if (started) {
     paused = false;
     day = hour = minute = second = 0;
-  
-
     document.getElementById(
       "second"
-    ).textContent = prependZeroToASingleDigitNumber(second);
+    ).textContent = prependZero(second);
     document.getElementById(
       "minute"
-    ).textContent = prependZeroToASingleDigitNumber(minute);
+    ).textContent = prependZero(minute);
     document.getElementById(
       "hour"
-    ).textContent = prependZeroToASingleDigitNumber(hour);
+    ).textContent = prependZero(hour);
     document.getElementById(
       "day"
-      ).textContent = prependZeroToASingleDigitNumber(day);
+      ).textContent = prependZero(day);
 
     timerID = setInterval(timer, 1000);
   } else if (timerID) {
@@ -104,8 +82,5 @@ document.getElementById("pauseResume").onclick = e => {
   if (!started) {
     return;
   }
-
   toggleButton(e.target);
 };
-
-
